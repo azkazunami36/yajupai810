@@ -6,3 +6,23 @@ html, body {
 body {
     background-image: url("image.png");
 }
+
+#follower {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #ffd47a 0%, #ff6b9a 60%);
+    border: 3px solid rgba(255,255,255,0.95);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: left 0.08s linear, top 0.08s linear;
+    z-index: 9999;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #follower { transition: none; }
+}

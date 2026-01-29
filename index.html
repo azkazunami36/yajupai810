@@ -10,5 +10,20 @@
         <footer style="background: rgba(255, 255, 255, 0.212); position: fixed; bottom: 0;">
             <p style="font-size: 150px; color: rgb(255, 89, 89); ">よこちん</p>何してんの。
         </footer>
+        <div id="follower" aria-hidden="true"></div>
+
+        <script>
+        (function(){
+            const follower = document.getElementById('follower');
+            window.addEventListener('mousemove', (e) => {
+                follower.style.left = e.clientX + 'px';
+                follower.style.top = e.clientY + 'px';
+            }, {passive: true});
+
+            window.addEventListener('touchstart', () => {
+                follower.style.display = 'none';
+            }, {passive: true});
+        })();
+        </script>
     </body>
 </html>
