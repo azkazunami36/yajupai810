@@ -1,29 +1,47 @@
 <!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="utf-8">
-        <title>やじゅ"パ"イ"</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <p style="font-size: 120px;color:white;">アイスティーしか無かったのかよ！！！</p>
-        <footer style="background: rgba(255, 255, 255, 0.212); position: fixed; bottom: 0;">
-            <p style="font-size: 150px; color: rgb(255, 89, 89); ">よこちん</p>何してんの。
-        </footer>
-        <div id="follower" aria-hidden="true"></div>
+<html lang="en">
 
-        <script>
-        (function(){
-            const follower = document.getElementById('follower');
-            window.addEventListener('mousemove', (e) => {
-                follower.style.left = e.clientX + 'px';
-                follower.style.top = e.clientY + 'px';
-            }, {passive: true});
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Horizon</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-            window.addEventListener('touchstart', () => {
-                follower.style.display = 'none';
-            }, {passive: true});
-        })();
-        </script>
-    </body>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="ui-layer">
+            <div id="hud-top-left">
+                <div id="score">SCORE: 0</div>
+                <div id="weapon">WEAPON: DEFAULT</div>
+            </div>
+            <div id="hud-top-right">
+                <div id="lives">LIVES: 3</div>
+                <div id="stage">STAGE 1</div>
+            </div>
+            <div id="wave-info"></div>
+            <div id="start-screen" class="screen">
+                <h1>NEON HORIZON</h1>
+                <div class="controls-box">
+                    <p>🎮 WASD / Arrow Keys — Move</p>
+                    <p>🔫 SPACE / Z — Shoot</p>
+                    <p>🔄 R — Restart (on Game Over)</p>
+                </div>
+                <p class="blink">Press any key to start</p>
+            </div>
+            <div id="game-over-screen" class="screen hidden">
+                <h1>GAME OVER</h1>
+                <p id="final-score">Score: 0</p>
+                <p class="blink">Press R to Restart</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/InputHandler.js"></script>
+    <script src="js/entities.js"></script>
+    <script src="js/LevelManager.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
 </html>

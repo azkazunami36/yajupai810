@@ -1,28 +1,180 @@
-html, body {
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+:root {
+    --text-color: #fff;
+    --primary-color: #0ff;
+    --accent-color: #f0f;
+    --bg-color: #050510;
+}
+
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    background-color: var(--bg-color);
+    font-family: 'Orbitron', 'Segoe UI', Tahoma, sans-serif;
+    color: var(--text-color);
+}
+
+#game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+canvas {
+    display: block;
     width: 100%;
     height: 100%;
 }
-body {
-    background-image: url("image.png");
-}
 
-#follower {
-    position: fixed;
-    left: 0;
+/* ===== HUD ===== */
+#ui-layer {
+    position: absolute;
     top: 0;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 40% 35%, #ffd47a 0%, #ff6b9a 60%);
-    border: 3px solid rgba(255,255,255,0.95);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    left: 0;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
-    transform: translate(-50%, -50%);
-    transition: left 0.08s linear, top 0.08s linear;
-    z-index: 9999;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    #follower { transition: none; }
+#hud-top-left {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+}
+
+#hud-top-right {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    text-align: right;
+}
+
+#score {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-shadow: 0 0 8px var(--primary-color);
+}
+
+#weapon {
+    font-size: 16px;
+    margin-top: 6px;
+    color: #aaa;
+    transition: color 0.3s;
+}
+
+#weapon.weapon-spread {
+    color: #ff0;
+    text-shadow: 0 0 8px #ff0;
+}
+
+#weapon.weapon-laser {
+    color: #0ff;
+    text-shadow: 0 0 8px #0ff;
+}
+
+#weapon.weapon-homing {
+    color: #f0f;
+    text-shadow: 0 0 8px #f0f;
+}
+
+#lives {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent-color);
+    text-shadow: 0 0 8px var(--accent-color);
+}
+
+#stage {
+    font-size: 16px;
+    margin-top: 6px;
+    color: #ff0;
+    text-shadow: 0 0 8px #ff0;
+}
+
+#wave-info {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    font-weight: 700;
+    color: #aaa;
+    text-shadow: 0 0 10px currentColor;
+    letter-spacing: 2px;
+}
+
+/* ===== SCREENS ===== */
+.screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(5, 5, 16, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.screen h1 {
+    font-size: clamp(36px, 8vw, 72px);
+    font-weight: 900;
+    margin-bottom: 30px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+}
+
+.controls-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px 40px;
+    margin-bottom: 30px;
+}
+
+.controls-box p {
+    font-size: 18px;
+    margin: 8px 0;
+    color: #ccc;
+    letter-spacing: 1px;
+}
+
+.screen p {
+    font-size: 20px;
+    margin: 8px 0;
+    color: #999;
+}
+
+.blink {
+    animation: blink 1.2s infinite;
+    color: #fff !important;
+    margin-top: 20px !important;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+.hidden {
+    display: none !important;
 }
