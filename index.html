@@ -15,25 +15,47 @@
             <div id="hud-top-left">
                 <div id="score">SCORE: 0</div>
                 <div id="weapon">WEAPON: DEFAULT</div>
+                <div id="fire-rate">RATE: ☆☆☆☆☆</div>
             </div>
             <div id="hud-top-right">
                 <div id="lives">LIVES: 3</div>
+                <div id="bombs">BOMB: 💣💣💣</div>
                 <div id="stage">STAGE 1</div>
             </div>
             <div id="wave-info"></div>
+
+            <!-- START SCREEN -->
             <div id="start-screen" class="screen">
                 <h1>NEON HORIZON</h1>
+                <div id="difficulty-selector">
+                    <p class="selector-label">DIFFICULTY</p>
+                    <div class="diff-options-row">
+                        <div class="diff-option diff-easy" data-diff="0">EASY</div>
+                        <div class="diff-option diff-normal selected" data-diff="1">NORMAL</div>
+                        <div class="diff-option diff-hard" data-diff="2">HARD</div>
+                        <div class="diff-option diff-hell" data-diff="3">地獄</div>
+                    </div>
+                </div>
                 <div class="controls-box">
                     <p>🎮 WASD / Arrow Keys — Move</p>
                     <p>🔫 SPACE / Z — Shoot</p>
-                    <p>🔄 R — Restart (on Game Over)</p>
+                    <p>💣 B / X — Bomb</p>
+                    <p>⏸ P / ESC — Pause</p>
                 </div>
-                <p class="blink">Press any key to start</p>
+                <p class="blink">Press ENTER or SPACE to start</p>
             </div>
+
+            <!-- GAME OVER SCREEN -->
             <div id="game-over-screen" class="screen hidden">
                 <h1>GAME OVER</h1>
                 <p id="final-score">Score: 0</p>
                 <p class="blink">Press R to Restart</p>
+            </div>
+
+            <!-- PAUSE SCREEN -->
+            <div id="pause-screen" class="screen hidden">
+                <h1>PAUSED</h1>
+                <p>Press P or ESC to resume</p>
             </div>
         </div>
     </div>

@@ -44,27 +44,27 @@ canvas {
 
 #hud-top-left {
     position: absolute;
-    top: 15px;
-    left: 20px;
+    top: 12px;
+    left: 16px;
 }
 
 #hud-top-right {
     position: absolute;
-    top: 15px;
-    right: 20px;
+    top: 12px;
+    right: 16px;
     text-align: right;
 }
 
 #score {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
     color: var(--primary-color);
     text-shadow: 0 0 8px var(--primary-color);
 }
 
 #weapon {
-    font-size: 16px;
-    margin-top: 6px;
+    font-size: 14px;
+    margin-top: 4px;
     color: #aaa;
     transition: color 0.3s;
 }
@@ -84,26 +84,40 @@ canvas {
     text-shadow: 0 0 8px #f0f;
 }
 
+#fire-rate {
+    font-size: 14px;
+    margin-top: 2px;
+    color: #f80;
+    text-shadow: 0 0 6px #f80;
+}
+
 #lives {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
     color: var(--accent-color);
     text-shadow: 0 0 8px var(--accent-color);
 }
 
-#stage {
+#bombs {
     font-size: 16px;
-    margin-top: 6px;
+    margin-top: 4px;
+    color: #f44;
+    text-shadow: 0 0 6px #f44;
+}
+
+#stage {
+    font-size: 14px;
+    margin-top: 4px;
     color: #ff0;
     text-shadow: 0 0 8px #ff0;
 }
 
 #wave-info {
     position: absolute;
-    top: 50px;
+    top: 46px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     color: #aaa;
     text-shadow: 0 0 10px currentColor;
@@ -118,49 +132,136 @@ canvas {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: rgba(5, 5, 16, 0.85);
+    background: rgba(5, 5, 16, 0.88);
     backdrop-filter: blur(8px);
     z-index: 10;
     pointer-events: auto;
 }
 
 .screen h1 {
-    font-size: clamp(36px, 8vw, 72px);
+    font-size: clamp(32px, 7vw, 64px);
     font-weight: 900;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
     background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: 6px;
+    letter-spacing: 5px;
     text-transform: uppercase;
 }
 
+/* ===== DIFFICULTY SELECTOR ===== */
+#difficulty-selector {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.selector-label {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 10px;
+    letter-spacing: 3px;
+}
+
+.diff-options-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.diff-option {
+    padding: 10px 20px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    color: #888;
+    letter-spacing: 2px;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.diff-option:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #ccc;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.diff-option.selected {
+    border-color: currentColor;
+    transform: scale(1.1);
+}
+
+.diff-easy.selected {
+    color: #0f0;
+    background: rgba(0, 255, 0, 0.1);
+    text-shadow: 0 0 10px #0f0;
+    border-color: #0f0;
+}
+
+.diff-normal.selected {
+    color: #0cf;
+    background: rgba(0, 200, 255, 0.1);
+    text-shadow: 0 0 10px #0cf;
+    border-color: #0cf;
+}
+
+.diff-hard.selected {
+    color: #fa0;
+    background: rgba(255, 170, 0, 0.1);
+    text-shadow: 0 0 10px #fa0;
+    border-color: #fa0;
+}
+
+.diff-hell.selected {
+    color: #f00;
+    background: rgba(255, 0, 0, 0.15);
+    text-shadow: 0 0 15px #f00;
+    border-color: #f00;
+    animation: hellPulse 0.8s infinite;
+}
+
+@keyframes hellPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 10px #f00;
+    }
+
+    50% {
+        box-shadow: 0 0 25px #f00, 0 0 50px rgba(255, 0, 0, 0.3);
+    }
+}
+
+/* ===== CONTROLS BOX ===== */
 .controls-box {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 20px 40px;
-    margin-bottom: 30px;
+    border-radius: 10px;
+    padding: 16px 32px;
+    margin-bottom: 24px;
 }
 
 .controls-box p {
-    font-size: 18px;
-    margin: 8px 0;
+    font-size: 16px;
+    margin: 6px 0;
     color: #ccc;
     letter-spacing: 1px;
 }
 
 .screen p {
-    font-size: 20px;
-    margin: 8px 0;
+    font-size: 18px;
+    margin: 6px 0;
     color: #999;
 }
 
 .blink {
     animation: blink 1.2s infinite;
     color: #fff !important;
-    margin-top: 20px !important;
+    margin-top: 16px !important;
 }
 
 @keyframes blink {
