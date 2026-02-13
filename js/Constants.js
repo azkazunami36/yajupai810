@@ -1,5 +1,5 @@
 // ===================== DIFFICULTY PRESETS =====================
-const DIFFICULTY = {
+var DIFFICULTY = {
     EASY: {
         label: 'EASY', lives: 6, bombs: 5, playerSpeed: 5, shootInterval: 12,
         spawnInterval: 1400, enemiesPerWave: 5, burstMin: 1, burstChance: 0.25, burstMax: 2,
