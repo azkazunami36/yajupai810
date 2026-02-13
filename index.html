@@ -10,59 +10,278 @@
 
 <body>
     <div id="game-container">
+        <!-- CRT OVERLAY -->
+        <div class="crt-overlay"></div>
+        <div id="boss-warning" class="boss-warning">WARNING</div>
+
         <canvas id="gameCanvas"></canvas>
         <div id="ui-layer">
             <div id="hud-top-left">
                 <div id="score">SCORE: 0</div>
                 <div id="weapon">WEAPON: DEFAULT</div>
                 <div id="fire-rate">RATE: ☆☆☆☆☆</div>
+                <div id="funnel-count"></div>
             </div>
             <div id="hud-top-right">
                 <div id="lives">LIVES: 3</div>
                 <div id="bombs">BOMB: 💣💣💣</div>
-                <div id="stage">STAGE 1</div>
+                <div id="stage">STAGE 1</div>0
             </div>
             <div id="wave-info"></div>
 
             <!-- START SCREEN -->
             <div id="start-screen" class="screen">
-                <h1>NEON HORIZON</h1>
-                <div id="difficulty-selector">
-                    <p class="selector-label">DIFFICULTY</p>
-                    <div class="diff-options-row">
-                        <div class="diff-option diff-easy" data-diff="0">EASY</div>
-                        <div class="diff-option diff-normal selected" data-diff="1">NORMAL</div>
-                        <div class="diff-option diff-hard" data-diff="2">HARD</div>
-                        <div class="diff-option diff-hell" data-diff="3">地獄</div>
+                <div class="title-container">
+                    <h1 class="main-title">NEON HORIZON</h1>
+                    <p class="subtitle" data-i18n="subtitle">CYBERPUNK SHOOTER</p>
+                    <p class="version-label">BETA 2.0>
+                </div>
+
+                <div id="main-menu">
+                    <button id="btn-start" class="menu-btn primary-btn" data-i18n="btnStart">START MISSION</button>
+                    <button id="btn-encyclopedia" class="menu-btn" data-i18n="btnEncyclopedia">ENCYCLOPEDIA</button>
+                    <button id="btn-settings" class="menu-btn" data-i18n="btnSettings">SETTINGS</button>
+                    <!-- Difficulty will be selecting inside start or via a toggle, keeping it simple for now -> visible on start screen or prompt? 
+                         Let's keep the difficulty selector visible on the start screen for quick access as per original design, 
+                         but styled better. -->
+                    <div id="difficulty-selector">
+                        <p class="selector-label" data-i18n="labelDiff">THREAT LEVEL</p>
+                        <div class="diff-options-row">
+                            <div class="diff-option diff-easy" data-diff="0" data-i18n="diffEasy">EASY</div>
+                            <div class="diff-option diff-normal selected" data-diff="1" data-i18n="diffNormal">NORMAL
+                            </div>
+                            <div class="diff-option diff-hard" data-diff="2" data-i18n="diffHard">HARD</div>
+                            <div class="diff-option diff-hell" data-diff="3" data-i18n="diffHell">HELL</div>
+                        </div>
                     </div>
                 </div>
-                <div class="controls-box">
-                    <p>🎮 WASD / Arrow Keys — Move</p>
-                    <p>🔫 SPACE / Z — Shoot</p>
-                    <p>💣 B / X — Bomb</p>
-                    <p>⏸ P / ESC — Pause</p>
+
+            </div>
+            <!-- SHIP SELECTION SCREEN -->
+            <div id="ship-selection-screen" class="screen hidden">
+                <h2 data-i18n="selectShipTitle">SELECT SHIP</h2>
+                <div class="ship-container">
+                    <!-- VANGUARD -->
+                    <div class="ship-card" data-ship="VANGUARD">
+                        <div class="ship-preview ship-vanguard"></div>
+                        <h3 data-i18n="shipVanguard">VANGUARD</h3>
+                        <p class="ship-desc" data-i18n="descVanguard">Balanced Type. Equipped with Hyper Beam.</p>
+                        <div class="ship-stats">
+                            <div class="stat-row"><span>SPD:</span><span class="stat-bar" style="width: 60%"></span>
+                            </div>
+                            <div class="stat-row"><span>POW:</span><span class="stat-bar" style="width: 60%"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- STORM -->
+                    <div class="ship-card" data-ship="STORM">
+                        <div class="ship-preview ship-storm"></div>
+                        <h3 data-i18n="shipStorm">STORM</h3>
+                        <p class="ship-desc" data-i18n="descStorm">High Mobility. Starts with Funnels.</p>
+                        <div class="ship-stats">
+                            <div class="stat-row"><span>SPD:</span><span class="stat-bar" style="width: 90%"></span>
+                            </div>
+                            <div class="stat-row"><span>POW:</span><span class="stat-bar" style="width: 40%"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- BASTION -->
+                    <div class="ship-card" data-ship="BASTION">
+                        <div class="ship-preview ship-bastion"></div>
+                        <h3 data-i18n="shipBastion">BASTION</h3>
+                        <p class="ship-desc" data-i18n="descBastion">Heavy Armor. Equipped with Energy Shield.</p>
+                        <div class="ship-stats">
+                            <div class="stat-row"><span>SPD:</span><span class="stat-bar" style="width: 30%"></span>
+                            </div>
+                            <div class="stat-row"><span>POW:</span><span class="stat-bar" style="width: 90%"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- BLADE -->
+                    <div class="ship-card" data-ship="BLADE">
+                        <div class="ship-preview ship-blade"></div>
+                        <h3 data-i18n="shipBlade">BLADE</h3>
+                        <p class="ship-desc" data-i18n="descBlade">Melee specialist. Equipped with high-power slash
+                            wave.</p>
+                        <div class="ship-stats">
+                            <div class="stat-row"><span>SPD:</span><span class="stat-bar" style="width: 70%"></span>
+                            </div>
+                            <div class="stat-row"><span>POW:</span><span class="stat-bar" style="width: 95%"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- RAY -->
+                    <div class="ship-card" data-ship="RAY">
+                        <div class="ship-preview ship-ray"></div>
+                        <h3 data-i18n="shipRay">RAY</h3>
+                        <p class="ship-desc" data-i18n="descRay">Laser specialist. Low-power piercing laser rapid fire.
+                        </p>
+                        <div class="ship-stats">
+                            <div class="stat-row"><span>SPD:</span><span class="stat-bar" style="width: 45%"></span>
+                            </div>
+                            <div class="stat-row"><span>POW:</span><span class="stat-bar" style="width: 30%"></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <p class="blink">Press ENTER or SPACE to start</p>
+                <div class="button-group" style="display: flex; gap: 20px;">
+                    <button id="btn-select-ship-back" class="menu-btn" data-i18n="btnBack">RETURN</button>
+                    <button id="btn-ship-ok" class="menu-btn primary-btn" data-i18n="btnOk">START MISSION</button>
+                </div>
+            </div>
+
+
+            <!-- ENCYCLOPEDIA SCREEN -->
+            <div id="encyclopedia-screen" class="screen hidden">
+                <h2 data-i18n="encyclopediaTitle">ENEMY DATABASE</h2>
+                <div class="encyclopedia-content">
+                    <div class="enemy-list-container">
+                        <ul id="enemy-list">
+                            <!-- Populated dynamically -->
+                        </ul>
+                    </div>
+                    <div class="enemy-details">
+                        <div class="enemy-preview">
+                            <canvas id="enemy-preview-canvas" width="300" height="200"></canvas>
+                        </div>
+                        <h3 id="enemy-name">Enemy Name</h3>
+                        <p id="enemy-desc">Description goes here.</p>
+                        <div class="enemy-stats">
+                            <span id="enemy-hp">HP: ?</span>
+                            <span id="enemy-score">Score: ?</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="btn-encyclopedia-back" class="menu-btn" data-i18n="btnBack">RETURN</button>
+            </div>
+
+            <!-- SETTINGS MODAL -->
+            <div id="settings-modal" class="screen hidden">
+                <h2 data-i18n="settingsTitle">SYSTEM CONFIGURATION</h2>
+                <div class="settings-content">
+                    <div class="setting-group">
+                        <label data-i18n="groupGeneral">GENERAL</label>
+                        <div class="setting-item">
+                            <span data-i18n="optLanguage">LANGUAGE</span>
+                            <select id="setting-language">
+                                <option value="en">ENGLISH</option>
+                                <option value="ja">日本語</option>
+                                <option value="kr">한국어</option>
+                                <option value="cn">中文</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <label data-i18n="groupVisuals">VISUALS</label>
+                        <div class="setting-item">
+                            <span data-i18n="optCrt">CRT EFFECT</span>
+                            <div class="toggle-switch" id="setting-crt">
+                                <input type="checkbox" id="crt-check" checked>
+                                <label for="crt-check" class="slider"></label>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <span data-i18n="optParticles">PARTICLES</span>
+                            <select id="setting-particles">
+                                <option value="0.5" data-i18n="valLow">LOW</option>
+                                <option value="1.0" selected data-i18n="valMed">MEDIUM</option>
+                                <option value="2.0" data-i18n="valHigh">HIGH</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <label data-i18n="groupAudio">AUDIO (Simulated)</label>
+                        <div class="setting-item">
+                            <span data-i18n="optBgm">BGM VOLUME</span>
+                            <input type="range" min="0" max="100" value="50" class="volume-slider" id="setting-bgm">
+                        </div>
+                        <div class="setting-item">
+                            <span data-i18n="optSe">SE VOLUME</span>
+                            <input type="range" min="0" max="100" value="80" class="volume-slider" id="setting-se">
+                        </div>
+                    </div>
+                </div>
+                <button id="btn-settings-back" class="menu-btn" data-i18n="btnBack">RETURN</button>
             </div>
 
             <!-- GAME OVER SCREEN -->
             <div id="game-over-screen" class="screen hidden">
-                <h1>GAME OVER</h1>
+                <h1 data-i18n="gameOver">GAME OVER</h1>
                 <p id="final-score">Score: 0</p>
-                <p class="blink">Press R to Restart</p>
+                <p class="blink" data-i18n="pressRestart">Press R to Restart</p>
             </div>
 
             <!-- PAUSE SCREEN -->
             <div id="pause-screen" class="screen hidden">
-                <h1>PAUSED</h1>
-                <p>Press P or ESC to resume</p>
+                <h1 data-i18n="paused">PAUSED</h1>
+                <div id="pause-status-panel">
+                    <div class="pause-stat-row"><span class="pause-stat-label">SHIP</span><span id="pause-ship"
+                            class="pause-stat-val">—</span></div>
+                    <div class="pause-stat-row"><span class="pause-stat-label">HP</span><span id="pause-hp"
+                            class="pause-stat-val">—</span></div>
+                    <div class="pause-stat-row"><span class="pause-stat-label">WEAPON</span><span id="pause-weapon"
+                            class="pause-stat-val">—</span></div>
+                    <div class="pause-stat-row"><span class="pause-stat-label">RATE</span><span id="pause-rate"
+                            class="pause-stat-val">—</span></div>
+                    <div class="pause-stat-row"><span class="pause-stat-label">BOMB</span><span id="pause-bomb"
+                            class="pause-stat-val">—</span></div>
+                    <div class="pause-stat-row"><span class="pause-stat-label">SHIELD</span><span id="pause-shield"
+                            class="pause-stat-val">—</span></div>
+                    <div class="pause-stat-row"><span class="pause-stat-label">FUNNEL</span><span id="pause-funnel"
+                            class="pause-stat-val">—</span></div>
+                    <div class="pause-stat-row"><span class="pause-stat-label">SCORE</span><span id="pause-score"
+                            class="pause-stat-val">—</span></div>
+                    <div class="pause-stat-row"><span class="pause-stat-label">STAGE</span><span id="pause-stage"
+                            class="pause-stat-val">—</span></div>
+                </div>
+                <!-- CHEAT PANEL (shown when debug unlocked) -->
+                <div id="pause-cheat-panel" class="hidden">
+                    <div class="pause-cheat-title">⚙ SYSTEM OVERRIDE</div>
+                    <div class="pause-cheat-toggles">
+                        <button class="pause-cheat-btn" data-cheat="invincible">🛡 INVINCIBLE: OFF</button>
+                        <button class="pause-cheat-btn" data-cheat="infiniteBombs">💣 INF. BOMBS: OFF</button>
+                        <button class="pause-cheat-btn" data-cheat="maxPower">⚡ MAX POWER: OFF</button>
+                        <button class="pause-cheat-btn" data-cheat="speedBoost">🚀 SPEED ×2: OFF</button>
+                        <button class="pause-cheat-btn" data-cheat="oneHitKill">💀 ONE-HIT KILL: OFF</button>
+                    </div>
+                    <div class="pause-cheat-actions">
+                        <button class="pause-cheat-action" id="pause-cheat-skip">⏩ SKIP STAGE</button>
+                        <button class="pause-cheat-action" id="pause-cheat-lives">❤ +5 LIVES</button>
+                        <button class="pause-cheat-action" id="pause-cheat-bombs">💣 +5 BOMBS</button>
+                    </div>
+                </div>
+                <p data-i18n="pressResume">Press P or ESC to resume</p>
+                <button id="pause-title-btn" class="menu-btn" data-i18n="returnTitle">🏠 タイトルへ戻る (T)</button>
+            </div>
+
+            <div class="controls-hint">
+                <p data-i18n="controlsHint">WASD: MOVE | SPACE: SHOOT | B: BOMB</p>
+            </div>
+
+            <!-- ERROR SCREEN -->
+            <div id="error-screen" class="screen hidden">
+                <div class="error-box">
+                    <h1 class="error-title">⚠ SYSTEM CRITICAL ERROR</h1>
+                    <div class="error-details-container">
+                        <pre id="error-text"></pre>
+                    </div>
+                    <div class="error-actions">
+                        <button id="btn-copy-error" class="menu-btn">📋 COPY ERROR</button>
+                        <button id="btn-reload-game" class="menu-btn primary-btn">🔄 RELOAD SYSTEM</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <script src="js/ErrorHandler.js"></script>
+    <script src="js/Constants.js"></script>
     <script src="js/InputHandler.js"></script>
     <script src="js/entities.js"></script>
+    <script src="js/SoundManager.js"></script>
     <script src="js/LevelManager.js"></script>
+    <script src="js/Encyclopedia.js"></script>
+    <script src="js/DebugMode.js"></script>
     <script src="js/main.js"></script>
 </body>
 
