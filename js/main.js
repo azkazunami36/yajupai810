@@ -576,6 +576,7 @@ class Layer {
         });
     }
     draw(ctx) {
+        ctx.save();
         this.stars.forEach(star => {
             const alpha = 0.5 + Math.sin(star.twinkle) * 0.5; // Twinkle effect
             ctx.globalAlpha = alpha;
@@ -583,8 +584,8 @@ class Layer {
             ctx.beginPath();
             ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
             ctx.fill();
-            ctx.globalAlpha = 1.0;
         });
+        ctx.restore();
     }
 }
 
@@ -1493,16 +1494,16 @@ function animate(timeStamp) {
     game.update(deltaTime);
 
     // Screen shake
+    // Draw Game
+    ctx.save();
+    // Screen shake
     if (game.shakeIntensity > 0 && game.shakeDuration > 0) {
         const sx = (Math.random() - 0.5) * game.shakeIntensity;
         const sy = (Math.random() - 0.5) * game.shakeIntensity;
-        ctx.save();
         ctx.translate(sx, sy);
-        game.draw(ctx);
-        ctx.restore();
-    } else {
-        game.draw(ctx);
     }
+    game.draw(ctx);
+    ctx.restore();
 
     if (!game.gameOver) {
         requestAnimationFrame(animate);
